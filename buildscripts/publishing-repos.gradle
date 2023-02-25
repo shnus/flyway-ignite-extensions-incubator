@@ -15,8 +15,16 @@
  * limitations under the License.
  */
 
-rootProject.name = 'flyway-ignite-extentions-incubator'
+apply plugin: 'maven-publish'
 
-include 'flyway-ignite'
-include 'flyway-ignite-examples'
-
+publishing {
+  repositories {
+    maven {
+      credentials {
+        username = project.properties["central_user"]
+        password = project.properties["central_password"]
+      }
+      url repos['central_repo']
+    }
+  }
+}

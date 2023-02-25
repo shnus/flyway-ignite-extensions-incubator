@@ -15,8 +15,18 @@
  * limitations under the License.
  */
 
-rootProject.name = 'flyway-ignite-extentions-incubator'
+package io.github.ingvard.incubator.ignite.flyway;
 
-include 'flyway-ignite'
-include 'flyway-ignite-examples'
+import org.flywaydb.core.extensibility.PluginMetadata;
 
+/**
+ * Ignite database extension.
+ */
+public class IgniteDatabaseExtension implements PluginMetadata {
+    /**
+     * Plugin description.
+     */
+    public String getDescription() {
+        return "Ignite flyway extension";
+    }
+}

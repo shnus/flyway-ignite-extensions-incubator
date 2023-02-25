@@ -15,8 +15,17 @@
  * limitations under the License.
  */
 
-rootProject.name = 'flyway-ignite-extentions-incubator'
+apply plugin: 'signing'
+apply from: "$rootDir/buildscripts/publishing-repos.gradle"
 
-include 'flyway-ignite'
-include 'flyway-ignite-examples'
+publishing {
+  publications {
+    maven(MavenPublication) {
+      from components.java
+    }
+  }
+}
 
+signing {
+  sign publishing.publications
+}

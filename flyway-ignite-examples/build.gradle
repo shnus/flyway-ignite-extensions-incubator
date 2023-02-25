@@ -15,8 +15,20 @@
  * limitations under the License.
  */
 
-rootProject.name = 'flyway-ignite-extentions-incubator'
+plugins {
+    id 'java'
+}
 
-include 'flyway-ignite'
-include 'flyway-ignite-examples'
+group 'io.github.ingvard'
+version '1.0-SNAPSHOT'
 
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+}
+
+test {
+    useJUnitPlatform()
+}

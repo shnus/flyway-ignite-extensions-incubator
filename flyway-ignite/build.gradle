@@ -15,8 +15,25 @@
  * limitations under the License.
  */
 
-rootProject.name = 'flyway-ignite-extentions-incubator'
+apply from: "$rootDir/buildscripts/java-core.gradle"
+apply from: "$rootDir/buildscripts/publishing.gradle"
+apply from: "$rootDir/buildscripts/java-junit5.gradle"
 
-include 'flyway-ignite'
-include 'flyway-ignite-examples'
+description = "flyway-ignite"
 
+dependencies {
+    annotationProcessor libs.lombok
+
+    implementation libs.flyway.core
+    compileOnly libs.ignite.core
+
+    testImplementation libs.ignite.core
+    testImplementation libs.ignite.indexing
+    testImplementation libs.assertj.core
+    testImplementation libs.junit5.api
+    testRuntimeOnly libs.junit5.impl
+}
+
+test {
+    useJUnitPlatform()
+}
