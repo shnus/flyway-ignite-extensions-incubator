@@ -16,7 +16,7 @@
  */
 
 apply plugin: 'signing'
-apply from: "$rootDir/buildscripts/publishing-repos.gradle"
+apply plugin: 'maven-publish'
 
 publishing {
   publications {
@@ -24,6 +24,35 @@ publishing {
       from components.java
     }
   }
+
+  repositories {
+    maven {
+      credentials {
+        username = project.properties["central_user"]
+        password = project.properties["central_password"]
+      }
+
+      //https://s01.oss.sonatype.org/content/repositories/snapshots/
+      //https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/
+      url project.properties["central_url"]
+    }
+  }
+}
+
+task sourceJar(type: Jar) {
+  classifier "sources"
+  from sourceSets.main.allJava
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+  classifier "javadoc"
+  from javadoc.destinationDir
+}
+
+artifacts {
+  archives jar
+  archives sourceJar
+  archives javadocJar
 }
 
 signing {

@@ -20,23 +20,34 @@ plugins {
     id "com.github.spotbugs" version '4.3.0' apply false
 }
 
-group 'io.github.ingvard'
-version '1.0-SNAPSHOT'
-
 repositories {
     mavenCentral()
 }
 
-ext {
-    repos = [
-        'release'   : "http://localhost:8081/repository/maven-releases/",
-        'snapshot'  : "http://localhost:8081/repository/maven-snapshots/"
-    ]
-}
+allprojects {
+    group 'io.github.ingvard'
+    version = "0.0.1-SNAPSHOT"
 
-dependencies {
-}
+    java {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
 
-test {
-    useJUnitPlatform()
+    tasks.withType(Jar) {
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    }
+
+    tasks.withType(Test) {
+        defaultCharacterEncoding = 'UTF-8'
+    }
+
+    tasks.withType(Sign) {
+        enabled = project.hasProperty('signing.keyId')
+                && project.hasProperty('signing.password')
+                && project.hasProperty('signing.secretKeyRingFile')
+    }
+
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
 }
