@@ -20,8 +20,32 @@ apply plugin: 'maven-publish'
 
 publishing {
   publications {
-    maven(MavenPublication) {
+    mavenJava(MavenPublication) {
       from components.java
+      pom {
+        name = 'Flyway ignite extentions'
+        description = 'Experemental extentions for flyway ignite integration'
+
+        url = 'https://github.com/ingvard/flyway-ignite-extensions-incubator'
+        licenses {
+          license {
+            name = 'The Apache License, Version 2.0'
+            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+          }
+        }
+        developers {
+          developer {
+            id = 'mstepachev'
+            name = 'Maksim Stepachev'
+            email = 'maksim.stepachev@gmail.com'
+          }
+        }
+        scm {
+          connection = 'scm:git:git://github.com/ingvard/flyway-ignite-extensions-incubator'
+          developerConnection = 'scm:git:ssh://github.com/ingvard/flyway-ignite-extensions-incubator'
+          url = 'https://github.com/ingvard/flyway-ignite-extensions-incubator'
+        }
+      }
     }
   }
 
@@ -37,22 +61,6 @@ publishing {
       url project.properties["central_url"]
     }
   }
-}
-
-task sourceJar(type: Jar) {
-  classifier "sources"
-  from sourceSets.main.allJava
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-  classifier "javadoc"
-  from javadoc.destinationDir
-}
-
-artifacts {
-  archives jar
-  archives sourceJar
-  archives javadocJar
 }
 
 signing {

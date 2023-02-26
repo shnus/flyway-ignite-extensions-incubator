@@ -1,5 +1,15 @@
 # flyway-ignite-extensions-incubator
 
+# Maven dependency
+
+```
+<dependency>
+    <groupId>io.github.ingvard</groupId>
+    <artifactId>flyway-ignite</artifactId>
+    <version>0.0.1</version>
+</dependency>
+```
+
 # Feature list
 ## Basic feature
 

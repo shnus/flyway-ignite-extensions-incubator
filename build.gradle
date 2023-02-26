@@ -26,12 +26,7 @@ repositories {
 
 allprojects {
     group 'io.github.ingvard'
-    version = "0.0.1-SNAPSHOT"
-
-    java {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
+    version = "0.0.1"
 
     tasks.withType(Jar) {
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
