@@ -1,0 +1,40 @@
+= flyway-ignite-extensions-incubator image:https://img.shields.io/maven-central/v/io.github.ingvard/flyway-ignite?logo=apachemaven&logoColor=red[Maven Central,link=https://search.maven.org/artifact/io.github.ingvard/flyway-ignite] image:https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat[GitHub license,link=http://www.apache.org/licenses/LICENSE-2.0]
+
+The repository is a collection of extensions for the Flyway database migration tool that are specifically designed to work with Apache Ignite. These extensions are being used in production applications to manage database schema changes and updates across different environments. The Flyway Ignite incubator project provides these extensions to enhance the functionality of the Flyway tool when working with Apache Ignite.
+
+== How to report bug / feature
+
+If you encounter a bug or would like to suggest a new feature, you are encouraged to open an Issue or Poll Request. In the event that you have implemented the feature yourself, you are also welcome to submit a Pull Request.
+
+== How to use
+
+Just add this dependency:
+
+----
+<dependency>
+    <groupId>io.github.ingvard</groupId>
+    <artifactId>flyway-ignite</artifactId>
+    <version>0.0.1</version>
+</dependency>
+----
+
+In cases when you use spring boot bom file, you should define:
+
+----
+<dependency>
+    <groupId>org.flywaydb</groupId>
+    <artifactId>flyway-core</artifactId>
+    <version>9.15.0</version>
+</dependency>
+----
+
+== Components
+
+|===
+| Component | Description
+
+| flyway-ignite | flyway sdk for Apache Ignite
+| flyway-ignite-commandline |
+| flyway-ignite-common |
+| flyway-ignite-examples |
+|===

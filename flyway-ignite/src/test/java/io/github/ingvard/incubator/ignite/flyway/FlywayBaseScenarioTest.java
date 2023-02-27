@@ -22,6 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.sql.SQLException;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.MigrationInfoService;
+import org.flywaydb.core.api.output.MigrateResult;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -38,7 +39,15 @@ public class FlywayBaseScenarioTest extends AbstractTest {
                 .dataSource(datasource())
                 .load();
 
-        fl.migrate();
+        MigrateResult migrate = fl.migrate();
+
+        assertThat(migrate.success).isTrue();
+        assertThat(migrate.migrationsExecuted).isEqualTo(2);
+        assertThat(migrate.initialSchemaVersion).isNull();
+        assertThat(migrate.targetSchemaVersion).isEqualTo("2");
+
+        assertThat(migrate.migrations).extracting("description")
+                .containsExactlyInAnyOrder("first", "second");
 
         assertThat(ignite.cacheNames()).containsExactlyInAnyOrder(
                 FLYWAY_SCHEMA_HISTORY_NAME,
