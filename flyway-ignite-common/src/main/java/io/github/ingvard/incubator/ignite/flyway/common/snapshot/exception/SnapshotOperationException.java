@@ -15,27 +15,24 @@
  * limitations under the License.
  */
 
-apply from: "$rootDir/buildscripts/java-core.gradle"
-apply from: "$rootDir/buildscripts/java-junit5.gradle"
+package io.github.ingvard.incubator.ignite.flyway.common.snapshot.exception;
 
-dependencies {
+/**
+ * Snapshot operation exception.
+ */
+public class SnapshotOperationException extends RuntimeException {
+    /**
+     * Default constructor.
+     */
+    public SnapshotOperationException() {
+    }
 
-    compileOnly libs.lombok
-    annotationProcessor libs.lombok
-
-    implementation libs.flyway.core
-    compileOnly libs.slf4j.simple
-    compileOnly libs.ignite.core
-
-    testCompileOnly libs.lombok
-    testAnnotationProcessor libs.lombok
-
-    testImplementation libs.ignite.core
-    testImplementation libs.ignite.indexing
-    testImplementation libs.assertj.core
-    testImplementation libs.junit5.api
-    testImplementation libs.slf4j.simple
-
-    testImplementation libs.flyway.ignite
-    testRuntimeOnly libs.junit5.impl
+    /**
+     * The exception with a message.
+     *
+     * @param msg Message.
+     */
+    public SnapshotOperationException(String msg) {
+        super(msg);
+    }
 }

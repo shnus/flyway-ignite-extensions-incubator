@@ -15,27 +15,17 @@
  * limitations under the License.
  */
 
-apply from: "$rootDir/buildscripts/java-core.gradle"
-apply from: "$rootDir/buildscripts/java-junit5.gradle"
+package io.github.ingvard.incubator.ignite.flyway.common.snapshot;
 
-dependencies {
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-    compileOnly libs.lombok
-    annotationProcessor libs.lombok
-
-    implementation libs.flyway.core
-    compileOnly libs.slf4j.simple
-    compileOnly libs.ignite.core
-
-    testCompileOnly libs.lombok
-    testAnnotationProcessor libs.lombok
-
-    testImplementation libs.ignite.core
-    testImplementation libs.ignite.indexing
-    testImplementation libs.assertj.core
-    testImplementation libs.junit5.api
-    testImplementation libs.slf4j.simple
-
-    testImplementation libs.flyway.ignite
-    testRuntimeOnly libs.junit5.impl
+/**
+ * Snapshot operation result.
+ */
+@Getter
+@RequiredArgsConstructor
+public class SnapshotOperation {
+    /** Success. */
+    private final boolean success;
 }

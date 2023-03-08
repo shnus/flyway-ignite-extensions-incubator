@@ -21,11 +21,13 @@ junit5 = "5.8.2"
 jetbrainsAnnotations = "20.1.0"
 mockito = "4.3.1"
 awaitility = "4.2.0"
-flywaydb = "9.15.0"
+flyway-core = "9.15.0"
+flyway-ignite = "0.0.1"
 ignite = "2.14.0"
 lombok = "1.18.26"
 testkit = "1.8.2"
 spotBugs = "4.7.3"
+slf4j-simple = "2.0.6"
 
 #Tools
 pmdTool = "6.28.0"
@@ -37,7 +39,8 @@ checkstyleTool = "10.3.3"
 ignite-core = { module = "org.apache.ignite:ignite-core", version.ref = "ignite" }
 ignite-indexing = { module = "org.apache.ignite:ignite-indexing", version.ref = "ignite" }
 
-flyway-core = { module = "org.flywaydb:flyway-core", version.ref = "flywaydb" }
+flyway-core = { module = "org.flywaydb:flyway-core", version.ref = "flyway-core" }
+flyway-ignite = {module = "io.github.ingvard:flyway-ignite", version.ref = "flyway-ignite"}
 
 lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
 
@@ -48,6 +51,8 @@ jetbrains-annotations = { module = "org.jetbrains:annotations", version.ref = "j
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
 mockito-junit = { module = "org.mockito:mockito-junit-jupiter", version.ref = "mockito" }
 mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockito" }
+
+slf4j-simple = {module = "org.slf4j:slf4j-simple", version.ref="slf4j-simple"}
 
 #JUnit
 junit5-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit5" }

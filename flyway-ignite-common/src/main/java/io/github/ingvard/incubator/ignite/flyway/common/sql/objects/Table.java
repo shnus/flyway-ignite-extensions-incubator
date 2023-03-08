@@ -15,27 +15,25 @@
  * limitations under the License.
  */
 
-apply from: "$rootDir/buildscripts/java-core.gradle"
-apply from: "$rootDir/buildscripts/java-junit5.gradle"
+package io.github.ingvard.incubator.ignite.flyway.common.sql.objects;
 
-dependencies {
+import java.util.List;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-    compileOnly libs.lombok
-    annotationProcessor libs.lombok
+/**
+ * The Java object that represents a table in an intermediate form, which simplifies the comparison operation.
+ */
+@Getter
+@RequiredArgsConstructor
+public class Table {
+    /** Name. */
+    private final String name;
 
-    implementation libs.flyway.core
-    compileOnly libs.slf4j.simple
-    compileOnly libs.ignite.core
+    /** Columns. */
+    private final List<Column> columns;
 
-    testCompileOnly libs.lombok
-    testAnnotationProcessor libs.lombok
-
-    testImplementation libs.ignite.core
-    testImplementation libs.ignite.indexing
-    testImplementation libs.assertj.core
-    testImplementation libs.junit5.api
-    testImplementation libs.slf4j.simple
-
-    testImplementation libs.flyway.ignite
-    testRuntimeOnly libs.junit5.impl
+    /** Config. */
+    @SuppressWarnings("JavaAbbreviationUsage")
+    private final TableStoreConfig config;
 }

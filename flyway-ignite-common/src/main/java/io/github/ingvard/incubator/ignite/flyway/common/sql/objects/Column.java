@@ -15,27 +15,41 @@
  * limitations under the License.
  */
 
-apply from: "$rootDir/buildscripts/java-core.gradle"
-apply from: "$rootDir/buildscripts/java-junit5.gradle"
+package io.github.ingvard.incubator.ignite.flyway.common.sql.objects;
 
-dependencies {
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.Nullable;
 
-    compileOnly libs.lombok
-    annotationProcessor libs.lombok
+/**
+ * Colum container.
+ */
+@Data
+@RequiredArgsConstructor
+public class Column {
+    /**
+     * Name.
+     */
+    private final String name;
 
-    implementation libs.flyway.core
-    compileOnly libs.slf4j.simple
-    compileOnly libs.ignite.core
+    /**
+     * Sql type.
+     */
+    private final String sqlType;
 
-    testCompileOnly libs.lombok
-    testAnnotationProcessor libs.lombok
+    /**
+     * Precision.
+     */
+    @Nullable
+    private final Integer precision;
 
-    testImplementation libs.ignite.core
-    testImplementation libs.ignite.indexing
-    testImplementation libs.assertj.core
-    testImplementation libs.junit5.api
-    testImplementation libs.slf4j.simple
+    /**
+     * Primary.
+     */
+    private final boolean primary;
 
-    testImplementation libs.flyway.ignite
-    testRuntimeOnly libs.junit5.impl
+    /**
+     * Nullable.
+     */
+    private final boolean nullable;
 }

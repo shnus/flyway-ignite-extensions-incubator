@@ -15,27 +15,26 @@
  * limitations under the License.
  */
 
-apply from: "$rootDir/buildscripts/java-core.gradle"
-apply from: "$rootDir/buildscripts/java-junit5.gradle"
+package io.github.ingvard.incubator.ignite.flyway.common.util;
 
-dependencies {
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
-    compileOnly libs.lombok
-    annotationProcessor libs.lombok
+/**
+ * String utils and constants.
+ */
+public class StringUtils {
+    /** Empty string. */
+    public static final String EMPTY_STRING = "";
 
-    implementation libs.flyway.core
-    compileOnly libs.slf4j.simple
-    compileOnly libs.ignite.core
+    /** Whitespace. */
+    public static final String WHITESPACE = " ";
 
-    testCompileOnly libs.lombok
-    testAnnotationProcessor libs.lombok
+    /** Padding. */
+    public static final String PADDING = IntStream.range(0, 4)
+            .mapToObj(ignore -> WHITESPACE)
+            .collect(Collectors.joining());
 
-    testImplementation libs.ignite.core
-    testImplementation libs.ignite.indexing
-    testImplementation libs.assertj.core
-    testImplementation libs.junit5.api
-    testImplementation libs.slf4j.simple
-
-    testImplementation libs.flyway.ignite
-    testRuntimeOnly libs.junit5.impl
+    /** New line. */
+    public static final String NEW_LINE = "\n";
 }
