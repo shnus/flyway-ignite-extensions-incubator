@@ -1,0 +1,12 @@
+= Flyway ignite commandline tool
+
+== About
+
+This command-line tool is built using the open-source Flyway code available at https://github.com/flyway/flyway/tree/main/flyway-commandline[flyway-commandline github].
+As a result, some of the enterprise features such as snapshots and undo may behave slightly differently and may not conform to the specifications mentioned at https://documentation.red-gate.com/fd/snapshot-184127462.html [flyway snapshot].
+
+For accurate information on the tool's behavior, please refer to the documentation available in our repository.
+Additionally, all CLI commands are accessible through Java code by importing the ignite-flyway-common dependency.
+
+== Release
+

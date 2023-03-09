@@ -40,6 +40,7 @@ ignite-core = { module = "org.apache.ignite:ignite-core", version.ref = "ignite"
 ignite-indexing = { module = "org.apache.ignite:ignite-indexing", version.ref = "ignite" }
 
 flyway-core = { module = "org.flywaydb:flyway-core", version.ref = "flyway-core" }
+flyway-commandline = { module = "org.flywaydb:flyway-commandline", version.ref = "flyway-core" }
 flyway-ignite = {module = "io.github.ingvard:flyway-ignite", version.ref = "flyway-ignite"}
 
 lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }

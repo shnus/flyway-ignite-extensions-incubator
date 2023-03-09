@@ -20,4 +20,16 @@ apply from: "$rootDir/buildscripts/publishing.gradle"
 apply from: "$rootDir/buildscripts/java-junit5.gradle"
 
 dependencies {
+    compileOnly libs.lombok
+    annotationProcessor libs.lombok
+
+    implementation libs.flyway.core
+
+    testCompileOnly libs.lombok
+    testAnnotationProcessor libs.lombok
+
+    testImplementation libs.flyway.commandline
+
+    testImplementation libs.assertj.core
+    testImplementation libs.junit5.api
 }
