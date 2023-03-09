@@ -76,7 +76,7 @@ public class DumperConfiguration {
 
     /**
      * If {@link DumperConfiguration#isUnknownTypeSupport()} is {@code true}, it disables type checks for unknown values
-     * and sets {@link SqlTypeMapping#OBJECT} for them.
+     * and sets {@link SqlTypeMapping#OTHER} for them.
      *
      * @param unknownTypeSupport Unknown type support.
      */

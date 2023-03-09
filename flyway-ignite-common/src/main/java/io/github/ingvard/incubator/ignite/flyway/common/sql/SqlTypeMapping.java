@@ -36,9 +36,9 @@ public enum SqlTypeMapping {
      */
     STRING(String.class.getCanonicalName(), "VARCHAR"),
     /**
-     * Object.
+     * Other.
      */
-    OBJECT(Object.class.getCanonicalName(), "OBJECT");
+    OTHER(Object.class.getCanonicalName(), "OTHER");
 
     /**
      * Types.
@@ -73,7 +73,7 @@ public enum SqlTypeMapping {
     /**
      * Default type for unknown fields.
      */
-    public static String sqlObjectType() {
-        return OBJECT.sqlName;
+    public static String sqlUnknownType() {
+        return OTHER.sqlName;
     }
 }

@@ -15,8 +15,22 @@
 
 package io.github.ingvard.incubator.ignite.flyway.commandline.command.snapshot;
 
+import static io.github.ingvard.incubator.ignite.flyway.commandline.command.snapshot.SnapshotCommandExtension.SnapshotCommandFlag.UNKNOWN_TYPE_SUPPORTED;
+import static io.github.ingvard.incubator.ignite.flyway.commandline.command.snapshot.SnapshotCommandExtension.SnapshotCommandProperty.SNAPSHOT_NAME;
+import static io.github.ingvard.incubator.ignite.flyway.commandline.command.snapshot.SnapshotCommandExtension.SnapshotCommandProperty.SNAPSHOT_WORK_DIR;
+
+import io.github.ingvard.incubator.ignite.flyway.commandline.command.CommandlineFlag;
+import io.github.ingvard.incubator.ignite.flyway.commandline.command.CommandlineProperty;
+import io.github.ingvard.incubator.ignite.flyway.commandline.config.FlywayIgniteConfigurationExtractor;
+import io.github.ingvard.incubator.ignite.flyway.common.snapshot.Dumper;
+import io.github.ingvard.incubator.ignite.flyway.common.snapshot.DumperConfiguration;
 import java.util.Arrays;
 import java.util.List;
+import javax.sql.DataSource;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import org.apache.ignite.IgniteJdbcThinDataSource;
+import org.apache.ignite.internal.util.typedef.F;
 import org.flywaydb.core.api.FlywayException;
 import org.flywaydb.core.api.configuration.Configuration;
 import org.flywaydb.core.api.output.OperationResult;
@@ -33,6 +47,49 @@ public class SnapshotCommandExtension implements CommandExtension {
     public static final List<String> SNAPSHOT_COMMANDS = Arrays.asList("snapshot", "ss");
 
     /**
+     * Snapshot command flags.
+     */
+    @Getter
+    @RequiredArgsConstructor
+    public enum SnapshotCommandFlag implements CommandlineFlag {
+        /**
+         * Unknown type supported.
+         */
+        UNKNOWN_TYPE_SUPPORTED(List.of("unsafe-type", "ut")),
+
+        /**
+         * Full snapshot.
+         */
+        FULL_SNAPSHOT(List.of("full"));
+
+        /**
+         * Aliases.
+         */
+        private final List<String> aliases;
+    }
+
+    /**
+     * Snapshot command properties.
+     */
+    @Getter
+    @RequiredArgsConstructor
+    public enum SnapshotCommandProperty implements CommandlineProperty {
+        /**
+         * Snapshot name.
+         */
+        SNAPSHOT_NAME("snapshot.name"),
+        /**
+         * Snapshot work directory.
+         */
+        SNAPSHOT_WORK_DIR("snapshot.dir");
+
+        /**
+         * Property name.
+         */
+        private final String name;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override public boolean handlesCommand(String cmd) {
@@ -43,14 +100,55 @@ public class SnapshotCommandExtension implements CommandExtension {
      * {@inheritDoc}
      */
     @Override public boolean handlesParameter(String param) {
-        return false;
+        return Arrays.stream(SnapshotCommandFlag.values()).anyMatch(e -> e.match(param));
     }
 
     /**
      * {@inheritDoc}
      */
     @Override public OperationResult handle(String cmd, Configuration cfg, List<String> flags) throws FlywayException {
-        throw new UnsupportedOperationException("TODO");
+        DataSource dataSrc = cfg.getDataSource();
+
+        if (!(dataSrc instanceof IgniteJdbcThinDataSource)) {
+            throw new IllegalStateException(String.format("Wrong datasource [actual=%s, expected=%s]",
+                    dataSrc.getClass().getCanonicalName(),
+                    IgniteJdbcThinDataSource.class.getCanonicalName()
+            ));
+        }
+
+        IgniteJdbcThinDataSource igniteDataSrc = (IgniteJdbcThinDataSource) dataSrc;
+
+        String username = igniteDataSrc.getUsername();
+        String pwd = igniteDataSrc.getPassword();
+
+        if (!F.isEmpty(username) && !F.isEmpty(pwd)) {
+            throw new UnsupportedOperationException(
+                    "Secure connection hasn't supported yet. Please create an issue request:"
+                            + " https://github.com/ingvard/flyway-ignite-extensions-incubator");
+        }
+
+        DumperConfiguration dpCfg = Dumper.configure()
+                .setAddresses(igniteDataSrc.getAddresses());
+
+        if (flags.stream().anyMatch(UNKNOWN_TYPE_SUPPORTED::match)) {
+            dpCfg.unknownTypeSupport(true);
+        }
+
+        String snapshotDir = FlywayIgniteConfigurationExtractor.getProperty(SNAPSHOT_WORK_DIR);
+
+        if (!F.isEmpty(snapshotDir)) {
+            dpCfg.location(snapshotDir);
+        }
+
+        Dumper dp = dpCfg.load();
+
+        String snapshotName = FlywayIgniteConfigurationExtractor.getProperty(SNAPSHOT_NAME);
+
+        if (!F.isEmpty(snapshotName)) {
+            return dp.createFullSchemaSnapshot(snapshotName);
+        } else {
+            return dp.createFullSchemaSnapshot();
+        }
     }
 
     /**

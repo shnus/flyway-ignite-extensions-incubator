@@ -15,6 +15,7 @@
 
 package io.github.ingvard.incubator.ignite.flyway.commandline;
 
+import static io.github.ingvard.incubator.ignite.flyway.common.util.StringUtils.WHITESPACE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import io.github.ingvard.incubator.ignite.flyway.commandline.utils.TestableLogger;
@@ -75,6 +76,13 @@ public abstract class CommandlineAbstractTest {
      */
     protected void runCliWithoutArguments() {
         Main.main(new String[] {});
+    }
+
+    /**
+     * @param cmd Command.
+     */
+    protected void runCli(String cmd) {
+        Main.main(cmd.split(WHITESPACE));
     }
 
     /**

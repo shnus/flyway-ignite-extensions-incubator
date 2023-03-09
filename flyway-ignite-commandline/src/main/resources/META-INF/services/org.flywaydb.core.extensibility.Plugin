@@ -16,3 +16,4 @@
 #
 
 io.github.ingvard.incubator.ignite.flyway.commandline.command.snapshot.SnapshotCommandExtension
+io.github.ingvard.incubator.ignite.flyway.commandline.config.FlywayIgniteConfigurationExtractor

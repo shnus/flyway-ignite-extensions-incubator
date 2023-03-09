@@ -131,7 +131,7 @@ public class Dumper {
                     skippedCaches
             );
 
-            return new SnapshotOperation(true);
+            return new SnapshotOperation(true, snapshotFile.getName());
         } catch (OverlappingFileLockException e) {
             log.warn("The lock file cannot be obtained, a parallel snapshot is possible running.");
 

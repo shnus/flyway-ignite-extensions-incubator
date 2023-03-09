@@ -19,13 +19,18 @@ package io.github.ingvard.incubator.ignite.flyway.common.snapshot;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.flywaydb.core.api.output.OperationResult;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Snapshot operation result.
  */
 @Getter
 @RequiredArgsConstructor
-public class SnapshotOperation {
+public class SnapshotOperation implements OperationResult {
     /** Success. */
     private final boolean success;
+
+    /** Snapshot name. */
+    @Nullable private final String snapshotName;
 }

@@ -38,4 +38,12 @@ public class CommandlineTest extends CommandlineAbstractTest {
                         ll.contains(p.getLeft()) && ll.contains(p.getRight())
                 ));
     }
+
+    /**
+     *
+     */
+    @Test
+    public void shouldMakeFullDumpOfSchema() {
+        runCli("snapshot -full -snapshot.name=my-snapshot");
+    }
 }

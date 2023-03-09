@@ -34,7 +34,20 @@ In cases when you use spring boot bom file, you should define:
 | Component | Description
 
 | flyway-ignite | flyway sdk for Apache Ignite
-| flyway-ignite-commandline |
-| flyway-ignite-common |
-| flyway-ignite-examples |
+| flyway-ignite-commandline | Command line tool
+| flyway-ignite-common | Shared part of flyway-ignite lib
+| flyway-ignite-examples | Examples
 |===
+
+== Features
+
+=== Dumper
+As part of our experimental snapshot engine implementation, the Dumper provides snapshot related features. This allows users to create a complete or incremental schema snapshot. The Dumper can be accessed via a direct Java call, as shown in the example below, or through the command-line tool.
+
+----
+  Dumper dp = Dumper.configure()
+                .setAddresses("localhost:4234")
+                .load();
+
+  SnapshotOperation result = dp.createFullSchemaSnapshot("test-snapshot-name");
+----

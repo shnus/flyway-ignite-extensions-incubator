@@ -30,6 +30,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ignite.cache.QueryEntity;
 import org.apache.ignite.client.ClientCacheConfiguration;
+import org.apache.ignite.internal.jdbc.thin.JdbcThinUtils;
 
 /**
  * Schema mapper for {@link QueryEntity} definition.
@@ -122,12 +123,18 @@ public class IntermediateSchemaMapper {
      * @param columnTypeClsName Column type class name.
      */
     private String sqlType(String columnName, String columnTypeClsName) {
+        String jdbcType = JdbcThinUtils.typeName(columnTypeClsName);
+
+        if (!jdbcType.equals(SqlTypeMapping.sqlUnknownType())) {
+            return jdbcType;
+        }
+
         Optional<String> typeByClsNameOpt = SqlTypeMapping.findSqlTypeByClassName(columnTypeClsName);
 
         if (typeByClsNameOpt.isEmpty() && unknownTypeSupport) {
             log.warn("Unsupported sql type was replaced to upper Object type [column={}, type={}].", columnName, columnTypeClsName);
 
-            return SqlTypeMapping.sqlObjectType();
+            return SqlTypeMapping.sqlUnknownType();
         } else {
             return typeByClsNameOpt.orElseThrow(() -> new IllegalStateException(String.format(
                     "Unsupported sql type [column=%s, type=%s].", columnName, columnTypeClsName
