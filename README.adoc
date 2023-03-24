@@ -4,7 +4,7 @@ The repository is a collection of extensions for the Flyway database migration t
 
 == How to report bug / feature
 
-If you encounter a bug or would like to suggest a new feature, you are encouraged to open an Issue or Poll Request. In the event that you have implemented the feature yourself, you are also welcome to submit a Pull Request.
+If you encounter a bug or would like to suggest a new feature, you are encouraged to open an Issue or Pull Request. In the event that you have implemented the feature yourself, you are also welcome to submit a Pull Request.
 
 == How to use
 
